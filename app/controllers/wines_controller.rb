@@ -1,5 +1,6 @@
 class WinesController < ApplicationController
   before_action :set_wine, only: %i[ show edit update destroy ]
+  before_action :authorize_admin!, :except => [:index]
 
   # GET /wines or /wines.json
   def index
@@ -37,10 +38,9 @@ class WinesController < ApplicationController
 
   # PATCH/PUT /wines/1 or /wines/1.json
   def update
-    
     respond_to do |format|
       if @wine.update(wine_params)
-        #@wine.updateStrainPercent(params[:wine][:strains_percent])
+        @wine.addStrainPercent(params[:wine][:strains_percent])
         format.html { redirect_to @wine, notice: "Wine was successfully updated." }
         format.json { render :show, status: :ok, location: @wine }
       else

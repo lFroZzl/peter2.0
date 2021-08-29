@@ -1,0 +1,35 @@
+<%= form_with(model: magazine, local: true) do |form| %>
+  <% if magazine.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(magazine.errors.count, "error") %> prohibited this magazine from being saved:</h2>
+
+      <ul>
+      <% magazine.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+
+    <%= form.label :oenologist %>
+    <% Oenologist.all.each do |o| %>
+      <%= o.name %> 
+      <%= form.collection_check_boxes(:job_title_ids, JobTitle.all, :id, :name) do |b|%>
+        <input type="checkbox" <%= magazine.isOenologistThisJobTitle(o.id, b.value)%> value="<%= b.value %>" name="magazine[oenologists][<%= o.id %>][job_title_ids][]" id="magazine_job_title_ids_1"> <%= b.text %>
+      <% end %>
+      <br/>
+    <% end %>
+
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

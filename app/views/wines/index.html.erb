@@ -6,23 +6,23 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Strain%</th>
+      <th>Strains</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @wines.each do |wine| %>
-       <tr>
-         <td><%= wine.name %></td>
-          <td><%= wine.strains.order(:name).map{|s| "#{s.name} (#{wine.getPercentByStrain(s.id)})" }.join(",") %></td>
-          <td><%= link_to 'Show', wine %></td>
-          <td><%= link_to 'Edit', edit_wine_path(wine) %></td>
-          <td><%= link_to 'Destroy', wine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+      <tr>
+        <td><%= wine.name %></td>
+        <td><%= wine.strains.order(:name).map{ |s| "#{s.name} (#{wine.getPercentByStrain(s.id)})" }.join(', ') %></td>
+        <td><%= link_to 'Show', wine %></td>
+        <td><%= link_to 'Edit', edit_wine_path(wine) %></td>
+        <td><%= link_to 'Destroy', wine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <br>
 

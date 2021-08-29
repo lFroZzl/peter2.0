@@ -18,11 +18,11 @@
 
   <div class="field">
     <%= form.label :strains %>
-      <%= form.collection_check_boxes(:strain_ids, Strain.where(available:true), :id, :name) do |b| %>
-        <%= b.label class:"label-checkbox" do %>
-          <%= b.check_box + b.text %>
-          <%= text_field("wine[strains_percent]", b.value)%>
-        <% end %>
+    <%= form.collection_check_boxes(:strain_ids, Strain.where(:available => true), :id, :name) do |b| %>
+      <%= b.label class:"label-checkbox" do %>
+        <%= b.check_box + b.text %>
+        <%= text_field("wine[strains_percent]", b.value, value: wine.getPercentByStrain(b.value)) %>
+      <% end %>
     <% end %>
   </div>
 
@@ -30,4 +30,3 @@
     <%= form.submit %>
   </div>
 <% end %>
-
